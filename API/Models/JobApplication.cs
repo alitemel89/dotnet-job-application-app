@@ -7,7 +7,7 @@ namespace API.Models
 {
     public class JobApplication
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public string CompanyName { get; set; }
 

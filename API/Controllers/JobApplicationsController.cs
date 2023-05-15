@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -12,30 +14,21 @@ namespace API.Controllers
     [Route("api/jobapplications")]
     public class JobApplicationsController : ControllerBase
     {
+
+        private readonly DataContext _context;
+
+        public JobApplicationsController(DataContext context)
+        {
+            _context = context;
+        }
+
+        
         private static readonly List<JobApplication> Applications = new List<JobApplication>();
 
         [HttpGet]
-        public IActionResult GetAllApplications()
+        public async Task<ActionResult<List<Job>>> GetJobs()
         {
-            return Ok(Applications);
-        }
-
-        [HttpPost]
-        public IActionResult SubmitApplication(JobApplication application)
-        {
-            application.ApplicationDate = DateTime.Now;
-            Applications.Add(application);
-            return CreatedAtAction(nameof(GetApplicationById), new { id = application.Id }, application);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetApplicationById(Guid id)
-        {
-            var application = Applications.Find(a => a.Id == id);
-            if (application == null)
-                return NotFound();
-
-            return Ok(application);
+            return Ok(await _context.JobApplications.ToListAsync());
         }
     }
 
