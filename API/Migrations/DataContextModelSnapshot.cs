@@ -42,44 +42,24 @@ namespace API.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("API.Models.JobApplication", b =>
+            modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("ApplicationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CoverLetter")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsEligibleToWork")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RequiresVisaSponsorship")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Resume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("SalaryExpectation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Surname")
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobApplications");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

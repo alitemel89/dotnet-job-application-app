@@ -11,6 +11,7 @@ namespace API.Data
         public static async Task SeedData(DataContext context)
         {
             if (context.Jobs.Any()) return;
+            if (context.Users.Any()) return;
 
             var jobs = new List<Job>
             {
@@ -34,7 +35,18 @@ namespace API.Data
                 },
             };
 
+            var users = new List<User> 
+            {
+                new User 
+                {
+                    CompanyName = "DEF",
+                    Email="def@gmail.com",
+                    PasswordHash="$2a$11$KGmGS3xiljdiNnHqRVUmQ.bXxCNaubJB0HJg1db9.StiRqR.oWA72"
+                }
+            };
+
             await context.Jobs.AddRangeAsync(jobs);
+            await context.Users.AddRangeAsync(users);
             await context.SaveChangesAsync();
         }
     }
