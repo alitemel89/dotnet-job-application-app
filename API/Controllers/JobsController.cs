@@ -48,6 +48,7 @@ namespace API.Controllers
             return Ok(job);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult PostJob(Job job)
         {
@@ -55,6 +56,23 @@ namespace API.Controllers
             _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetJob), new { id = job.JobId }, job);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteJob(Guid id)
+        {
+            // Find the job by the specified id
+            var job = await _context.Jobs.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound("Job not found.");
+            }
+
+            // Remove the job from the context and save changes
+            _context.Jobs.Remove(job);
+            await _context.SaveChangesAsync();
+
+            return Ok("Job is deleted.");
         }
     }
 
