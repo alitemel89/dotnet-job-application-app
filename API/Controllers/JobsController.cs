@@ -31,7 +31,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Job>>> GetJobs()
         {
-            var jobs = _context.Jobs.ToList();
+            var jobs = _context.Jobs.Include(j => j.User).ToList();
 
             if (jobs.Count == 0)
             {
@@ -78,19 +78,24 @@ namespace API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJob(Guid id)
+        public IActionResult DeleteJob(string id)
         {
-
             // Find the job by ID
-            var job = _context.Jobs.FirstOrDefault(j => j.JobId == id);
+            var job = _context.Jobs.FirstOrDefault(j => j.JobId.ToString() == id);
 
             if (job == null)
             {
                 return NotFound("Job not found.");
             }
 
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (job.User.Email != userEmail)
+            {
+                return Forbid(); // Return 403 Forbidden if the current user is not the owner of the job
+            }
+
             _context.Jobs.Remove(job);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return Ok("Job is deleted.");
         }
