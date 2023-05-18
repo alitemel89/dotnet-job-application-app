@@ -87,30 +87,27 @@ namespace API.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.CompanyName)
+                new Claim(ClaimTypes.Name, user.CompanyName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            var key = new byte[64]; // Generate a 512-bit (64-byte) key
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(key);
-            }
-
-            var symmetricSecurityKey = new SymmetricSecurityKey(key);
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
+            
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TokenKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = signingCredentials
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = creds
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var jwt = tokenHandler.WriteToken(token);
 
-            return jwt;
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

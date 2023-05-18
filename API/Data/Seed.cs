@@ -13,31 +13,28 @@ namespace API.Data
             if (context.Jobs.Any()) return;
             if (context.Users.Any()) return;
 
+            var user = new User
+            {
+                Id = Guid.Parse("ac1279a6-bfad-40fa-bbfb-08db5717bdd1"),
+                Email = "ssd@gmail.com",
+                PasswordHash = "$2a$11$wr0szNCb1M/JT1O8D9WPa.dQdblA2ZNtcGmAj47XfN4qDzUcIEGZS",
+                CompanyName = "SSD GmbH."
+            };
+
+
             var jobs = new List<Job>
             {
                 new Job
                 {
-                CompanyName = "Company A",
                 Position = "Software Developer",
-                Description = "Job description for Software Developer position at Company A"
-                },
-                new Job
-                {
-                CompanyName = "Company B",
-                Position = "Frontend Developer",
-                Description = "Job description for Frontend Developer position at Company B"
-                },
-                new Job
-                {
-                CompanyName = "Company C",
-                Position = "Backend Developer",
-                Description = "Job description for Backend Developer position at Company C"
-                },
+                Description = "Job description for Software Developer position at SSD GmBH",
+                User = user
+                }
             };
 
-            var users = new List<User> 
+            var users = new List<User>
             {
-                new User 
+                new User
                 {
                     CompanyName = "DEF",
                     Email="def@gmail.com",

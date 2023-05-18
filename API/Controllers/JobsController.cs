@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Data;
 using API.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +17,13 @@ namespace API.Controllers
     [Route("api/jobs")]
     public class JobsController : ControllerBase
     {
-
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public JobsController(DataContext context)
+        public JobsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         private static readonly List<Job> Jobs = new List<Job>();
@@ -50,25 +53,42 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult PostJob(Job job)
+        public IActionResult PostJob(JobRequestDto jobRequest)
         {
+            var job = _mapper.Map<Job>(jobRequest);
+            // Get the current user's ID from the claims
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            // Retrieve the user from the database
+            var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Set the user properties of the job
+            job.User = user;
+
             _context.Jobs.Add(job);
             _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetJob), new { id = job.JobId }, job);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJob(Guid id)
         {
-            // Find the job by the specified id
-            var job = await _context.Jobs.FindAsync(id);
+
+            // Find the job by ID
+            var job = _context.Jobs.FirstOrDefault(j => j.JobId == id);
+
             if (job == null)
             {
                 return NotFound("Job not found.");
             }
 
-            // Remove the job from the context and save changes
             _context.Jobs.Remove(job);
             await _context.SaveChangesAsync();
 

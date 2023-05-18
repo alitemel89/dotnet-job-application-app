@@ -8,8 +8,8 @@ namespace API.Models
     public class Job
     {
         public Guid JobId { get; set; }
-        public string CompanyName { get; set; }
         public string Position { get; set; }
         public string Description { get; set; }
+        public User User { get; set; }
     }
 }

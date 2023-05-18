@@ -28,16 +28,18 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("JobId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Jobs");
                 });
@@ -60,6 +62,15 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("API.Models.Job", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

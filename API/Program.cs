@@ -1,9 +1,8 @@
 using System.Text;
 using API.Data;
-using API.Models;
+using API.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,28 +12,36 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var tokenSecret = builder.Configuration.GetValue<string>("AppSettings:Token");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSecret));
-
+        options.Authority = "http://localhost:5000";
+        options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = key,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
             ValidateIssuer = false,
             ValidateAudience = false
         };
+        options.Configuration = new Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
     });
 
+builder.Services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 var app = builder.Build();
@@ -46,6 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(builder => builder.WithOrigins("http://localhost:5000").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 app.UseHttpsRedirection();
 
@@ -58,17 +66,17 @@ app.MapControllers();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
-try
-{
-    var context = services.GetRequiredService<DataContext>();
-    await context.Database.MigrateAsync();
-    await Seed.SeedData(context);
-}
-catch (Exception ex)
-{
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occured during migration");
-}
+// try
+// {
+//     var context = services.GetRequiredService<DataContext>();
+//     await context.Database.MigrateAsync();
+//     await Seed.SeedData(context);
+// }
+// catch (Exception ex)
+// {
+//     var logger = services.GetRequiredService<ILogger<Program>>();
+//     logger.LogError(ex, "An error occured during migration");
+// }
 
 
 app.Run();
