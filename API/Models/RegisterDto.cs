@@ -11,7 +11,7 @@ namespace API.Models
         [Required]
         public string Email { get; set; }
         [Required]
-        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password must be complex")]
+        [RegularExpression("^(?=.*[A-Z])(?=.*\\d).{6,12}$", ErrorMessage = "Password must be 6-12 characters long and include at least one uppercase letter and a number.")]
         public string PasswordHash { get; set; }
         [Required]
         public string CompanyName { get; set; }
