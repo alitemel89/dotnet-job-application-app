@@ -81,17 +81,22 @@ namespace API.Controllers
         public IActionResult DeleteJob(string id)
         {
             // Find the job by ID
-            var job = _context.Jobs.FirstOrDefault(j => j.JobId.ToString() == id);
+            var job = _context.Jobs.Include(j => j.User).FirstOrDefault(j => j.JobId.ToString() == id);
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-            if (job == null)
+            if (userEmail == null)
             {
-                return NotFound("Job not found.");
+                return Unauthorized();
+            }
+            
+            if (job.User == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Job user is null.");
             }
 
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (job.User.Email != userEmail)
             {
-                return Forbid(); // Return 403 Forbidden if the current user is not the owner of the job
+                return Forbid();
             }
 
             _context.Jobs.Remove(job);
