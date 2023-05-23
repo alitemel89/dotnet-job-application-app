@@ -19,6 +19,14 @@ namespace API.Profiles
                     PasswordHash = src.UserPasswordHash,
                     CompanyName = src.UserCompanyName
                 }));
+
+            CreateMap<ApplicationRequestDto, Application>()
+                .ForMember(dest => dest.ApplicationId, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.ResumeFilePath, opt => opt.MapFrom(src => src.ResumeFilePath))
+                .ForMember(dest => dest.AppliedDate, opt => opt.Ignore());
         }
     }
+
 }

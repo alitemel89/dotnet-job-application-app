@@ -12,6 +12,7 @@ namespace API.Data
         {
             if (context.Jobs.Any()) return;
             if (context.Users.Any()) return;
+            if (context.Applications.Any()) return;
 
             var user = new User
             {
@@ -42,8 +43,22 @@ namespace API.Data
                 }
             };
 
-            await context.Jobs.AddRangeAsync(jobs);
-            await context.Users.AddRangeAsync(users);
+
+            var applications = new List<Application>{
+                new Application
+                 {
+                     ApplicationId = Guid.NewGuid(),
+                     Name = "John Doe",
+                     Email = "johndoe@example.com",
+                     ResumeFilePath = "Path/To/Resume1.pdf",
+                     AppliedDate = DateTime.UtcNow
+                 }
+            };
+
+
+            // await context.Jobs.AddRangeAsync(jobs);
+            // await context.Users.AddRangeAsync(users);
+            await context.Applications.AddRangeAsync(applications);
             await context.SaveChangesAsync();
         }
     }
