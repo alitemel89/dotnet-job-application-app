@@ -25,7 +25,7 @@ namespace API.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.ResumeFilePath, opt => opt.MapFrom(src => src.ResumeFilePath))
-                .ForMember(dest => dest.AppliedDate, opt => opt.Ignore());
+                .ForMember(dest => dest.AppliedDate, opt => opt.MapFrom(src => src.AppliedDate));
         }
     }
 

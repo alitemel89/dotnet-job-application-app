@@ -121,3 +121,4 @@ C:\Users\alite\Documents\GitHub\dotnet-job-application-app\API\bin\Debug\net7.0\
 C:\Users\alite\Documents\GitHub\dotnet-job-application-app\API\bin\Debug\net7.0\BCrypt.Net-Next.dll
 C:\Users\alite\Documents\GitHub\dotnet-job-application-app\API\bin\Debug\net7.0\AutoMapper.dll
 C:\Users\alite\Documents\GitHub\dotnet-job-application-app\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\alite\Documents\GitHub\dotnet-job-application-app\API\bin\Debug\net7.0\UploadStream.dll
