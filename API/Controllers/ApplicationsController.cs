@@ -27,6 +27,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Application>> GetApplications()
         {
