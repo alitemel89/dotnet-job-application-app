@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,500;0,600;0,700;0,900;1,200;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap');
 
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
@@ -12,10 +13,35 @@ body {
 
 @layer components {
   .btn {
-    @apply px-4 py-2
-    bg-gradient-to-r from-indigo-500 to-emerald-400 rounded-lg text-white
-    hover:bg-gradient-to-r hover:from-indigo-400 hover:to-emerald-300 
-    active:bg-gradient-to-r active:from-indigo-300 active:to-emerald-200
-    text-sm font-medium
+    @apply px-4 py-2 bg-gradient-to-r from-indigo-500 to-emerald-400 rounded-lg text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:to-emerald-300 active:bg-gradient-to-r active:from-indigo-300 active:to-emerald-200 text-sm font-medium
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-lg text-white text-sm font-medium border-emerald-500 border hover:bg-emerald-400
+  }
+}
+
+
+.text {
+  background: linear-gradient(to right,
+      #a79cc0 20%,
+      #00affa 30%,
+      #0190cd 70%,
+      #f7f3ff 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 500% auto;
+  animation: textShine 5s ease-in-out infinite alternate;
+}
+
+
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
   }
 }

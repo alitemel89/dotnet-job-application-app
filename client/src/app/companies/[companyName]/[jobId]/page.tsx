@@ -1,4 +1,10 @@
+import {
+  ArrowLeftCircleIcon,
+  PaperAirplaneIcon,
+  ShareIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -15,11 +21,11 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
   const job = await getJob();
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-slate-100 min-h-screen">
       {/* Hero section */}
 
       <div className="flex justify-center">
-        <div className="relative top-0 h-[50vh] w-full opacity-80 blur-sm">
+        <div className="relative top-0 h-[40vh] w-full opacity-80 blur-sm">
           <Image
             src="/images/hero.jpg"
             alt="hero-image"
@@ -44,12 +50,37 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
       {/* Job details */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="flex justify-center mb-4 space-x-2">
-            <button className="btn">Share</button>
-            <button className="btn">Apply</button>
+          <div className="flex justify-between mb-4">
+            <Link href="/">
+              <div className="flex items-center space-x-1">
+                <ArrowLeftCircleIcon className="w-8 h-8 cursor-pointer" />
+                <p>Back to Jobs</p>
+              </div>
+            </Link>
+            <div className="flex space-x-4">
+              <Link href="/share" className="btn flex items-center space-x-2">
+                <p>Share</p>
+                <ShareIcon className="w-4 h-4 text-white" />
+              </Link>
+              <Link
+                href="/application"
+                className="btn flex items-center space-x-2"
+              >
+                <p>Apply</p>
+                <PaperAirplaneIcon className="w-4 h-4 text-white" />
+              </Link>
+            </div>
           </div>
           <h2 className="text-2xl font-bold mb-4">Job Description</h2>
           <p className="text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
+            ligula in lectus mattis congue. In vel odio eros. Ut consectetur
+            aliquet odio, eu venenatis est posuere sed. Integer nec justo nec
+            arcu commodo accumsan.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
+            ligula in lectus mattis congue. In vel odio eros. Ut consectetur
+            aliquet odio, eu venenatis est posuere sed. Integer nec justo nec
+            arcu commodo accumsan.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
             ligula in lectus mattis congue. In vel odio eros. Ut consectetur
             aliquet odio, eu venenatis est posuere sed. Integer nec justo nec

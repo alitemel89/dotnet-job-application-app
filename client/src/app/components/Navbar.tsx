@@ -2,7 +2,7 @@
 
 import {
   Bars3Icon,
-  BuildingLibraryIcon,
+  CommandLineIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -23,11 +23,10 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <div className="flex items-center">
                 <Link href="/">
-                  <BuildingLibraryIcon className="text-white h-12 w-12 mr-4" />
+                  <CommandLineIcon className="h-8 w-8 mr-4 text-indigo-200" />
                 </Link>
-                <h1 className="text-white text-xl font-bold">
-                  IT JOBS
-                </h1>
+
+                <p className="text text-3xl font-bold tracking-wider">TechHire</p>
               </div>
             </div>
           </div>
@@ -50,7 +49,7 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             {/* Add additional buttons or icons here */}
-            <button className="btn">Register</button>
+            <button className="btn-secondary">Register</button>
             <button className="btn ml-4">Sign In</button>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -86,7 +85,7 @@ const Navbar = () => {
           </div>
           <div className="pt-4 pb-3 border-t border-gray-700 mx-4 flex flex-col">
             {/* Add additional buttons or icons here */}
-            <button className="my-4 btn">Register</button>
+            <button className="my-4 btn-secondary">Register</button>
             <button className="btn">Sign In</button>
           </div>
         </div>

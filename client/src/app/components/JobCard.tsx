@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BeakerIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
+import {  BuildingOffice2Icon } from "@heroicons/react/24/solid";
 
 type Props = {
   jobId?: string;
@@ -16,7 +16,7 @@ function JobCard({ position, description, companyName, jobId }: Props) {
     cursor-pointer items-center md:w-screen max-w-2xl"
       >
         <div>
-          <h1 className="md:text-2xl text-xl text-blue-900">{position}</h1>
+          <h1 className="md:text-2xl text-xl text-blue-900 font-bold tracking-wide">{position}</h1>
           <p className="text-gray-500 truncate text-sm">{description}</p>
         </div>
         <div className="flex items-center ml-4">
