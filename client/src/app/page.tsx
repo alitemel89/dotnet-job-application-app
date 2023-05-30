@@ -1,4 +1,6 @@
+import Image from "next/image";
 import JobCard from "./components/JobCard";
+import Navbar from "./components/Navbar";
 
 type JobProps = {
   jobId: string;
@@ -21,15 +23,26 @@ export default async function Home() {
   const jobs = await getJobs();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-slate-300">
-      {jobs.map((job: JobProps) => (
-        <JobCard
-          companyName={job.user.companyName}
-          description={job.description}
-          position={job.position}
-          jobId={job.jobId}
+    <>
+      <Navbar />
+      <div className="relative h-[50vh] w-full">
+        <Image
+          src="/images/hero.jpg"
+          alt="hero-image"
+          fill
+          style={{ objectFit: "cover" }}
         />
-      ))}
-    </main>
+      </div>
+      <main className="flex min-h-screen flex-col items-center justify-between bg-slate-100 p-8">
+        {jobs.map((job: JobProps) => (
+          <JobCard
+            companyName={job.user.companyName}
+            description={job.description}
+            position={job.position}
+            jobId={job.jobId}
+          />
+        ))}
+      </main>
+    </>
   );
 }
