@@ -71,20 +71,10 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
               </Link>
             </div>
           </div>
-          <h2 className="text-2xl font-bold mb-4">Job Description</h2>
+          <h2 className="text-lg font-bold mb-4">Job Description</h2>
+          <h3 className="mb-8 text-2xl text-blue-950 font-semibold">{job.position}</h3>
           <p className="text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
-            ligula in lectus mattis congue. In vel odio eros. Ut consectetur
-            aliquet odio, eu venenatis est posuere sed. Integer nec justo nec
-            arcu commodo accumsan.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
-            ligula in lectus mattis congue. In vel odio eros. Ut consectetur
-            aliquet odio, eu venenatis est posuere sed. Integer nec justo nec
-            arcu commodo accumsan.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae
-            ligula in lectus mattis congue. In vel odio eros. Ut consectetur
-            aliquet odio, eu venenatis est posuere sed. Integer nec justo nec
-            arcu commodo accumsan.
+            {job.description}
           </p>
         </div>
       </div>
