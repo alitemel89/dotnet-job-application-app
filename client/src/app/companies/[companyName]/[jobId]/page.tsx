@@ -25,7 +25,7 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
       {/* Hero section */}
 
       <div className="flex justify-center">
-        <div className="relative top-0 h-[40vh] w-full opacity-80 blur-sm">
+        <div className="relative top-0 h-[40vh] w-full filter brightness-50 opacity-80">
           <Image
             src="/images/hero.jpg"
             alt="hero-image"
@@ -58,9 +58,9 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
               </div>
             </Link>
             <div className="flex space-x-4">
-              <Link href="/share" className="btn flex items-center space-x-2">
+              <Link href="/share" className="btn-secondary text-emerald-400 flex items-center space-x-2">
                 <p>Share</p>
-                <ShareIcon className="w-4 h-4 text-white" />
+                <ShareIcon className="w-4 h-4 text-emerald-400" />
               </Link>
               <Link
                 href="/application"

@@ -16,7 +16,9 @@ type JobProps = {
 
 export default async function Home() {
   async function getJobs() {
-    const res = await fetch("http://localhost:5000/api/jobs"); // The result is cached
+    const res = await fetch("http://localhost:5000/api/jobs", {
+      next: { revalidate: 10 },
+    }); // The result is cached
     return res.json();
   }
 
@@ -33,7 +35,7 @@ export default async function Home() {
           style={{ objectFit: "cover" }}
         />
       </div>
-      <main className="flex min-h-screen flex-col items-center justify-between bg-slate-100 p-8">
+      <main className="flex flex-col space-y-4 items-center justify-between bg-slate-100 p-8">
         {jobs.map((job: JobProps) => (
           <JobCard
             companyName={job.user.companyName}
