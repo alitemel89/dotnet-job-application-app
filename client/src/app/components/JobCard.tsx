@@ -16,8 +16,8 @@ function JobCard({ position, description, companyName, jobId }: Props) {
     cursor-pointer items-center md:w-screen max-w-3xl"
       >
         <div>
-          <h1 className="md:text-2xl text-xl text-blue-900 font-bold tracking-wide max-w-md mb-2">{position}</h1>
-          <p className="text-gray-500 text-sm max-w-md truncate">{description}</p>
+          <h1 className="md:text-2xl text-xl text-blue-900 font-bold tracking-wide md:max-w-md mb-2">{position}</h1>
+          <p className="text-gray-500 text-sm md:max-w-md md:line-clamp-2 line-clamp-1">{description}</p>
         </div>
         <div className="flex items-center ml-4">
           <BuildingOffice2Icon className="h-8 w-8 text-emerald-500 mx-4" />
