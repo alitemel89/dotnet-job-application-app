@@ -37,28 +37,28 @@ namespace API.Data
             {
                 new User
                 {
-                    CompanyName = "DEF",
-                    Email="def@gmail.com",
+                    CompanyName = "SSD Gmbh.",
+                    Email="SSD@gmail.com",
                     PasswordHash="$2a$11$KGmGS3xiljdiNnHqRVUmQ.bXxCNaubJB0HJg1db9.StiRqR.oWA72"
                 }
             };
 
 
-            // var applications = new List<Application>{
-            //     new Application
-            //      {
-            //          ApplicationId = Guid.NewGuid(),
-            //          Name = "John Doe",
-            //          Email = "johndoe@example.com",
-            //          ResumeFilePath = "Path/To/Resume1.pdf",
-            //          AppliedDate = DateTime.UtcNow
-            //      }
-            // };
+            var applications = new List<Application>{
+                new Application
+                 {
+                     ApplicationId = Guid.NewGuid(),
+                     Name = "John Doe",
+                     Email = "johndoe@example.com",
+                     ResumeFilePath = "Path/To/Resume1.pdf",
+                     AppliedDate = DateTime.UtcNow
+                 }
+            };
 
 
-            // await context.Jobs.AddRangeAsync(jobs);
-            // await context.Users.AddRangeAsync(users);
-            // await context.Applications.AddRangeAsync(applications);
+            await context.Jobs.AddRangeAsync(jobs);
+            await context.Users.AddRangeAsync(users);
+            await context.Applications.AddRangeAsync(applications);
             await context.SaveChangesAsync();
         }
     }

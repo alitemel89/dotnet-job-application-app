@@ -20,11 +20,15 @@ namespace API.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
 
-        public ApplicationsController(DataContext context, IWebHostEnvironment hostEnvironment, IMapper mapper)
+        private readonly ILogger _logger;
+
+        public ApplicationsController(DataContext context, IWebHostEnvironment hostEnvironment,
+        IMapper mapper, ILogger<ApplicationsController> logger)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [Authorize]
@@ -84,6 +88,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred while uploading.");
                 throw ex;
             }
         }
@@ -108,6 +113,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred while uploading.");
                 throw ex;
             }
         }

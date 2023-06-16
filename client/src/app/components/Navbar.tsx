@@ -6,10 +6,20 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Retrieve user object from local storage
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      setUserEmail(user.email);
+    }
+  }, []);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -26,7 +36,9 @@ const Navbar = () => {
                   <CommandLineIcon className="h-8 w-8 mr-4 text-indigo-200" />
                 </Link>
 
-                <p className="text text-3xl font-bold tracking-wider">TechHire</p>
+                <p className="text text-3xl font-bold tracking-wider">
+                  TechHire
+                </p>
               </div>
             </div>
           </div>
@@ -49,9 +61,22 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             {/* Add additional buttons or icons here */}
-            <button className="btn-secondary">Register</button>
-            <button className="btn ml-4">Sign In</button>
           </div>
+          {userEmail ? (
+            <div>
+              <Link href="/post" className="hidden md:block btn float-left mx-4">
+                Post a Job
+              </Link>
+              <Link href="/post" className="hidden md:block btn-secondary float-left">
+                {userEmail}
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Link href="/register" className="btn-secondary">Register</Link>
+              <Link href="/signin" className="btn">Sign in</Link>
+            </div>
+          )}
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={toggleNavbar}
@@ -81,12 +106,27 @@ const Navbar = () => {
             >
               About
             </Link>
-            {/* Add more menu items as needed */}
           </div>
           <div className="pt-4 pb-3 border-t border-gray-700 mx-4 flex flex-col">
-            {/* Add additional buttons or icons here */}
-            <button className="my-4 btn-secondary">Register</button>
-            <button className="btn">Sign In</button>
+            {userEmail ? (
+              <div>
+                <Link href="/post" className="btn">
+                  Post a Job
+                </Link>
+                <Link href="/post" className="btn-secondary mx-4">
+                  {userEmail}
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link href="/register" className="btn-secondary">
+                  Register
+                </Link>
+                <Link href="/signin" className="btn">
+                  Sign in
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
