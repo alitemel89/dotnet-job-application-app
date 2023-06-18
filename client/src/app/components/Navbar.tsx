@@ -67,14 +67,14 @@ const Navbar = () => {
               <Link href="/post" className="hidden md:block btn float-left mx-4">
                 Post a Job
               </Link>
-              <Link href="/post" className="hidden md:block btn-secondary float-left">
+              <Link href="/profile" className="hidden md:block btn-secondary float-left">
                 {userEmail}
               </Link>
             </div>
           ) : (
             <div>
-              <Link href="/register" className="btn-secondary">Register</Link>
-              <Link href="/signin" className="btn">Sign in</Link>
+              <Link href="/register" className="hidden md:block btn-secondary float-left">Register</Link>
+              <Link href="/signin" className="hidden md:block btn float-left mx-4">Sign in</Link>
             </div>
           )}
           <div className="-mr-2 flex md:hidden">
@@ -119,7 +119,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div>
-                <Link href="/register" className="btn-secondary">
+                <Link href="/register" className="btn-secondary mr-4">
                   Register
                 </Link>
                 <Link href="/signin" className="btn">

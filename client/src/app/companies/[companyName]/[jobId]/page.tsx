@@ -6,10 +6,13 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useStore } from "../../../store";
 
 interface Props {
   params: { companyName: string; jobId: string };
 }
+
+
 
 async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
   // fetch data from server with parameter jobId and companyName
@@ -19,6 +22,7 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
   }
 
   const job = await getJob();
+  const companyLogoUrl = useStore((state) => state.companyLogoUrl);
 
   return (
     <div className="bg-slate-100 min-h-screen">
@@ -26,12 +30,17 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
 
       <div className="flex justify-center">
         <div className="relative top-0 h-[40vh] w-full filter brightness-50 opacity-80">
-          <Image
-            src="/images/hero.jpg"
-            alt="hero-image"
-            fill
-            style={{ objectFit: "cover" }}
-          />
+          {companyLogoUrl ? (
+            <Image
+              src={companyLogoUrl}
+              alt="Company Logo"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          )}
         </div>
         <div className="text-white absolute top-10 p-10">
           <h1 className="text-5xl font-bold mb-4">{job.position}</h1>
@@ -58,7 +67,10 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
               </div>
             </Link>
             <div className="flex space-x-4">
-              <Link href="/share" className="btn-secondary text-emerald-400 flex items-center space-x-2">
+              <Link
+                href="/share"
+                className="btn-secondary text-emerald-400 flex items-center space-x-2"
+              >
                 <p>Share</p>
                 <ShareIcon className="w-4 h-4 text-emerald-400" />
               </Link>
@@ -72,10 +84,10 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
             </div>
           </div>
           <h2 className="text-lg font-bold mb-4">Job Description</h2>
-          <h3 className="mb-8 text-2xl text-blue-950 font-semibold">{job.position}</h3>
-          <p className="text-gray-600">
-            {job.description}
-          </p>
+          <h3 className="mb-8 text-2xl text-blue-950 font-semibold">
+            {job.position}
+          </h3>
+          <p className="text-gray-600">{job.description}</p>
         </div>
       </div>
     </div>

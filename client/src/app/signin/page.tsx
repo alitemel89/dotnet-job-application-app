@@ -26,6 +26,7 @@ function Signin() {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
+        localStorage.setItem("jwtToken", data.token);
         const user = {
           email,
           hashedPassword,
