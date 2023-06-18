@@ -43,13 +43,29 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetJob(Guid id)
         {
-            var job = _context.Jobs.FirstOrDefault(j => j.JobId == id);
+            var job = _context.Jobs.Include(j => j.User).FirstOrDefault(j => j.JobId == id);
             if (job == null)
             {
                 return NotFound("Job not found.");
             }
-            return Ok(job);
+
+            // Create a new response object that includes the user
+            var jobResponse = new
+            {
+                JobId = job.JobId,
+                Position = job.Position,
+                Description = job.Description,
+                User = new
+                {
+                    Id = job.User.Id,
+                    Email = job.User.Email,
+                    CompanyName = job.User.CompanyName
+                }
+            };
+
+            return Ok(jobResponse);
         }
+
 
         [Authorize]
         [HttpPost]
@@ -88,7 +104,7 @@ namespace API.Controllers
             {
                 return Unauthorized();
             }
-            
+
             if (job.User == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Job user is null.");

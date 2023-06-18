@@ -2,19 +2,20 @@
 
 import React, { useState } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";
 import { Toaster, toast } from "react-hot-toast";
 import { storage } from "../../../firebase";
-import { useStore } from "../store";
 
 function CompanyProfile() {
   const [logoUpload, setLogoUpload] = useState<File | null>(null);
-  const logoUrl = useStore((state) => state.companyLogoUrl);
-  const setLogoUrl = useStore((state) => state.setCompanyLogo);
+  const [logoUrl, setLogoUrl] = useState<string | null>("");
+
+
+  const user = JSON.parse(localStorage.getItem("user")!);
 
   const uploadLogo = async () => {
     if (logoUpload == null) return;
-    const logoRef = ref(storage, `logos/${logoUpload.name + v4()}`);
+    const logoRef = ref(storage, `logos/${logoUpload.name + "-" + user.email}`);
+    console.log(logoRef.fullPath)
     try {
       const snapshot = await uploadBytes(logoRef, logoUpload);
       const url = await getDownloadURL(snapshot.ref);
