@@ -9,10 +9,12 @@ namespace API.Models
     {
         public string JobId { get; set; }
         public string Position { get; set; }
+        public string Location { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
         public string UserEmail { get; set; }
         public string UserPasswordHash { get; set; }
         public string UserCompanyName { get; set; }
+
     }
 }

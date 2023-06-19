@@ -55,6 +55,7 @@ namespace API.Controllers
                 JobId = job.JobId,
                 Position = job.Position,
                 Description = job.Description,
+                Location = job.Location,
                 User = new
                 {
                     Id = job.User.Id,
@@ -85,6 +86,7 @@ namespace API.Controllers
 
             // Set the user properties of the job
             job.User = user;
+            job.Location = jobRequest.Location;
 
             _context.Jobs.Add(job);
             _context.SaveChangesAsync();

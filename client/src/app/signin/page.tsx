@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import bcrypt from "bcryptjs";
+import { Toaster, toast } from "react-hot-toast";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ function Signin() {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
+        toast.success("Login successful!")
         localStorage.setItem("jwtToken", data.token);
         const user = {
           email,
@@ -36,9 +38,11 @@ function Signin() {
       } else {
         const errorData = await response.json();
         console.log("Login failed:", errorData);
+        toast.error("Invalid Credentials.")
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("Error:", error);
+      toast.error("Invalid Credentials.")
     }
   };
 
@@ -91,8 +95,10 @@ function Signin() {
               Sign in
             </button>
           </div>
+          <Toaster position="top-right" />
         </form>
       </div>
+
     </div>
   );
 }

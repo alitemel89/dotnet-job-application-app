@@ -26,7 +26,7 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
   return (
     <div className="bg-slate-100 min-h-screen">
       {/* Hero section */}
-      <HeroSection job={job} companyName={companyName}  />
+      <HeroSection job={job} companyName={companyName} />
      
 
       {/* Job details */}

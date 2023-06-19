@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230616100018_initialCreate")]
+    [Migration("20230619153611_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -60,6 +60,9 @@ namespace API.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Location")
                         .HasColumnType("text");
 
                     b.Property<string>("Position")

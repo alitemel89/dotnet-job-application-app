@@ -29,7 +29,8 @@ namespace API.Data
                 {
                 Position = "Software Developer",
                 Description = "Job description for Software Developer position at SSD GmBH",
-                User = user
+                User = user,
+                Location= "Berlin, Germany"
                 }
             };
 

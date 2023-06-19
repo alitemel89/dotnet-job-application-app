@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../../firebase";
-
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
 interface User {
   id: string;
@@ -18,6 +18,7 @@ interface Job {
   position: string;
   description: string;
   user: User;
+  location: string;
 }
 
 interface Props {
@@ -51,10 +52,9 @@ function HeroSection({ job, companyName }: Props) {
     });
   }, [job, imageUrls]);
 
-
   return (
     <div className="flex justify-center">
-      <div className="relative top-0 h-[40vh] w-full filter brightness-50 opacity-80">
+      <div className="relative top-0 h-[50vh] w-full filter brightness-50 opacity-80">
         <Image
           src="/images/hero.jpg"
           alt="hero-image"
@@ -78,6 +78,8 @@ function HeroSection({ job, companyName }: Props) {
           )}
 
           <p className="text-lg ml-4 text-center">{decodeURI(companyName)}</p>
+          <MapPinIcon className="w-6 h-6 ml-4" />
+          <p className="text-white p-1 font-light">{job?.location}</p>
         </div>
       </div>
     </div>

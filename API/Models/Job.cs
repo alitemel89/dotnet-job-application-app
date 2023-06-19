@@ -11,5 +11,6 @@ namespace API.Models
         public string Position { get; set; }
         public string Description { get; set; }
         public User User { get; set; } 
+        public string Location { get; set; }
     }
 }

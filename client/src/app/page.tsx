@@ -6,6 +6,7 @@ type JobProps = {
   jobId: string;
   position: string;
   description: string;
+  location: string;
   user: {
     id: string;
     email: string;
@@ -42,6 +43,7 @@ export default async function Home() {
             description={job.description}
             position={job.position}
             jobId={job.jobId}
+            location={job.location}
           />
         ))}
       </main>
