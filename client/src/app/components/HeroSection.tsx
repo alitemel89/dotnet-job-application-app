@@ -54,7 +54,7 @@ function HeroSection({ job, companyName }: Props) {
 
   return (
     <div className="flex justify-center">
-      <div className="relative top-0 h-[50vh] w-full filter brightness-50 opacity-80">
+      <div className="relative top-0 h-[55vh] w-full filter brightness-50 opacity-80">
         <Image
           src="/images/hero.jpg"
           alt="hero-image"
@@ -63,7 +63,7 @@ function HeroSection({ job, companyName }: Props) {
         />
       </div>
       <div className="text-white absolute top-10 p-10">
-        <h1 className="text-5xl font-bold mb-4">{job.position}</h1>
+        <h1 className="md:text-5xl font-bold mb-4 text-3xl">{job.position}</h1>
         <div className="flex items-center rounded-full">
           {companyLogoUrl ? (
             <Image
@@ -77,7 +77,7 @@ function HeroSection({ job, companyName }: Props) {
             <div className="bg-gray-400 w-16 h-16 rounded-full"></div>
           )}
 
-          <p className="text-lg ml-4 text-center">{decodeURI(companyName)}</p>
+          <p className="md:text-lg text-md ml-4 text-center">{decodeURI(companyName)}</p>
           <MapPinIcon className="w-6 h-6 ml-4" />
           <p className="text-white p-1 font-light">{job?.location}</p>
         </div>
