@@ -48,7 +48,7 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
                 <ShareIcon className="w-4 h-4 text-emerald-400" />
               </Link>
               <Link
-                href="/application"
+                href={`/apply/${jobId}`}
                 className="btn flex items-center space-x-2"
               >
                 <p>Apply</p>

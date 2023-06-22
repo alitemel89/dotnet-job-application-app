@@ -75,6 +75,10 @@ namespace API.Controllers
         private async Task<string> UploadFile(IFormFile _IFormFile)
         {
             string FileName = "";
+            if (_IFormFile == null)
+            {
+                throw new ArgumentNullException(nameof(_IFormFile));
+            }
             try
             {
                 FileInfo _FileInfo = new FileInfo(_IFormFile.FileName);
