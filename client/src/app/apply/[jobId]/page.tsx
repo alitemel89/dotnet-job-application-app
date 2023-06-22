@@ -2,17 +2,24 @@
 
 import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { jobId: string };
 }
 
 export default function Apply({ params: { jobId } }: Props) {
+  const router = useRouter()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [resume, setResume] = useState<File>();
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setResume(file);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,9 +31,10 @@ export default function Apply({ params: { jobId } }: Props) {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("jobId", jobId);
-    formData.append("appliedDate", date.toISOString())
+    formData.append("appliedDate", date.toISOString());
+
     if (resume) {
-      formData.append("resume", resume);
+      formData.append("resumeFilePath", resume);
     }
 
     try {
@@ -39,6 +47,7 @@ export default function Apply({ params: { jobId } }: Props) {
         // Job application submitted successfully
         toast.success("Job application submitted successfully");
         setIsSubmitted(true);
+        router.push(`/apply/${jobId}/success`);
       } else {
         // Handle the error case
         toast.error("Error submitting job application");
@@ -87,7 +96,7 @@ export default function Apply({ params: { jobId } }: Props) {
           <input
             type="file"
             id="resume"
-            onChange={(e) => setResume(e.target.files?.[0])}
+            onChange={handleResumeChange}
             className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
