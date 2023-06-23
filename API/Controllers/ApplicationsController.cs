@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Helper;
 using Microsoft.AspNetCore.StaticFiles;
+using System.Security.Claims;
+
 namespace API.Controllers
 {
     [ApiController]
@@ -32,13 +34,21 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public ActionResult<IEnumerable<Application>> GetApplications()
+        [HttpGet("{userId}")]
+        public ActionResult<IEnumerable<Application>> GetAllApplications(Guid userId)
         {
-            var applications = _context.Applications.ToList();
-            return Ok(applications);
-        }
+            var authenticatedUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+            if (userId == Guid.Parse(authenticatedUserId))
+            {
+                var applications = _context.Applications.Where(a => a.UserId == userId).ToList();
+                return Ok(applications);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> PostJobApplication([FromForm] ApplicationRequestDto applicationRequest)
@@ -61,6 +71,20 @@ namespace API.Controllers
             {
                 var resumeFileName = await UploadFile(resumeFile);
                 application.ResumeFilePath = resumeFileName;
+            }
+
+
+            var authenticatedUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (authenticatedUserId != null)
+            {
+                if (Guid.TryParse(authenticatedUserId, out Guid userId))
+                {
+                    application.UserId = userId;
+                }
+                else
+                {
+                    return BadRequest("Invalid User ID");
+                }
             }
 
             application.AppliedDate = DateTime.UtcNow;

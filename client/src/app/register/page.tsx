@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -22,13 +23,19 @@ const Register = () => {
         body: JSON.stringify({ companyName: name, email, passwordHash: password }),
       });
 
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match!")
+      }
+
       if (response.ok) {
         const data = await response.json();
         console.log("Registration successful:", data);
+        toast.success("Registration successful!")
         router.push('/')
       } else {
         const errorData = await response.json();
         console.log("Registration failed:", errorData);
+        toast.error(errorData.errors.PasswordHash[0])
       }
     } catch (error) {
       console.log("Error:", error);
@@ -116,6 +123,7 @@ const Register = () => {
               Register
             </button>
           </div>
+          <Toaster position="top-center" />
         </form>
       </div>
     </div>

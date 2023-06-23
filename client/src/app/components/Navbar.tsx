@@ -95,7 +95,7 @@ const Navbar = () => {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
-              href="/jobs"
+              href="/"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               Jobs
@@ -113,7 +113,7 @@ const Navbar = () => {
                 <Link href="/post" className="btn">
                   Post a Job
                 </Link>
-                <Link href="/post" className="btn-secondary mx-4">
+                <Link href="/profile" className="btn-secondary mx-4">
                   {userEmail}
                 </Link>
               </div>

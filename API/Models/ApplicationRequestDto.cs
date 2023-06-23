@@ -11,6 +11,7 @@ namespace API.Models
         public string Email { get; set; }
         public IFormFile ResumeFilePath { get; set; }
         public Guid JobId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime AppliedDate { get; set; }
 
     }

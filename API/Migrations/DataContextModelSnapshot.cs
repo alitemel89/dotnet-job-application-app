@@ -45,6 +45,9 @@ namespace API.Migrations
                     b.Property<string>("ResumeFilePath")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("ApplicationId");
 
                     b.ToTable("Applications");

@@ -22,6 +22,7 @@ namespace API.Models
         public string ResumeFilePath { get; set; }
 
         public Guid JobId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime AppliedDate { get; set; }
     }
 }

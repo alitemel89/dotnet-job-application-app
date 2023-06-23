@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230619153611_initialCreate")]
-    partial class initialCreate
+    [Migration("20230623110520_updateApplicationModel")]
+    partial class updateApplicationModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,9 @@ namespace API.Migrations
 
                     b.Property<string>("ResumeFilePath")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("ApplicationId");
 

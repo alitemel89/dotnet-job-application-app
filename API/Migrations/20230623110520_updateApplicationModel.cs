@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class updateApplicationModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,6 +20,7 @@ namespace API.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     ResumeFilePath = table.Column<string>(type: "text", nullable: true),
                     JobId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     AppliedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
