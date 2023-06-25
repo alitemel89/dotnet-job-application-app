@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Helper;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -33,33 +34,18 @@ namespace API.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         [HttpGet("{userId}")]
         public ActionResult<IEnumerable<Application>> GetAllApplications(Guid userId)
         {
-            var authenticatedUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (userId == Guid.Parse(authenticatedUserId))
-            {
-                var applications = _context.Applications.Where(a => a.UserId == userId).ToList();
-                return Ok(applications);
-            }
-            else
-            {
-                return Unauthorized();
-            }
+            var applications = _context.Applications.Where(a => a.UserId == userId).ToList();
+            return Ok(applications);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostJobApplication([FromForm] ApplicationRequestDto applicationRequest)
         {
             var application = _mapper.Map<Application>(applicationRequest);
-            if (applicationRequest == null)
-            {
-                return BadRequest("Invalid request body");
-            }
-
-            var job = await _context.Jobs.FindAsync(applicationRequest.JobId);
+            var job = await _context.Jobs.Include(j => j.User).FirstOrDefaultAsync(j => j.JobId == applicationRequest.JobId);
 
             if (job == null)
             {
@@ -73,20 +59,7 @@ namespace API.Controllers
                 application.ResumeFilePath = resumeFileName;
             }
 
-
-            var authenticatedUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (authenticatedUserId != null)
-            {
-                if (Guid.TryParse(authenticatedUserId, out Guid userId))
-                {
-                    application.UserId = userId;
-                }
-                else
-                {
-                    return BadRequest("Invalid User ID");
-                }
-            }
-
+            application.UserId = job.User.Id;
             application.AppliedDate = DateTime.UtcNow;
             _context.Applications.Add(application);
             await _context.SaveChangesAsync();

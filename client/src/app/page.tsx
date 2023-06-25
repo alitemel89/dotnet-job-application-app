@@ -28,7 +28,7 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <div className="relative h-[50vh] w-full">
+      <div className="relative h-[60vh] w-full">
         <Image
           src="/images/hero.jpg"
           alt="hero-image"

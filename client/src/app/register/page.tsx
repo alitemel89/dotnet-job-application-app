@@ -123,7 +123,7 @@ const Register = () => {
               Register
             </button>
           </div>
-          <Toaster position="top-center" />
+          <Toaster position="top-right" />
         </form>
       </div>
     </div>

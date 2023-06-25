@@ -8,9 +8,17 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+interface User {
+  id: string,
+  email: string,
+  passwordHash: string,
+  companyName: string
+}
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     // Retrieve user object from local storage
@@ -19,12 +27,31 @@ const Navbar = () => {
       const user = JSON.parse(userString);
       setUserEmail(user.email);
     }
-  }, []);
+
+    async function getUsers() {
+      try {
+        const response = await fetch("http://localhost:5000/api/users");
+        if (response.ok) {
+          const users: User[] = await response.json();
+          const matchedUser: User | undefined = users.find(user => user.email === userEmail);
+          setUserId(matchedUser?.id!);
+          console.log(users);
+        } else {
+          console.error("Error:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    getUsers();
+  }, [userEmail]);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
+  console.log(userId)
   return (
     <nav className="bg-gray-800 static">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,17 +91,33 @@ const Navbar = () => {
           </div>
           {userEmail ? (
             <div>
-              <Link href="/post" className="hidden md:block btn float-left mx-4">
+              <Link
+                href="/post"
+                className="hidden md:block btn float-left mx-4"
+              >
                 Post a Job
               </Link>
-              <Link href="/profile" className="hidden md:block btn-secondary float-left">
+              <Link
+                href={`/profile/${userId}`}
+                className="hidden md:block btn-secondary float-left"
+              >
                 {userEmail}
               </Link>
             </div>
           ) : (
             <div>
-              <Link href="/register" className="hidden md:block btn-secondary float-left">Register</Link>
-              <Link href="/signin" className="hidden md:block btn float-left mx-4">Sign in</Link>
+              <Link
+                href="/register"
+                className="hidden md:block btn-secondary float-left"
+              >
+                Register
+              </Link>
+              <Link
+                href="/signin"
+                className="hidden md:block btn float-left mx-4"
+              >
+                Sign in
+              </Link>
             </div>
           )}
           <div className="-mr-2 flex md:hidden">
@@ -113,7 +156,7 @@ const Navbar = () => {
                 <Link href="/post" className="btn">
                   Post a Job
                 </Link>
-                <Link href="/profile" className="btn-secondary mx-4">
+                <Link href={`/profile/${userId}`} className="btn-secondary mx-4">
                   {userEmail}
                 </Link>
               </div>
