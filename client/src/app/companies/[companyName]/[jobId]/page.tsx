@@ -27,11 +27,11 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
     <div className="bg-slate-100 min-h-screen">
       {/* Hero section */}
       <HeroSection job={job} companyName={companyName} />
-     
+      
 
       {/* Job details */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white shadow-lg rounded-lg p-6">
+        <div className="bg-white shadow-lg rounded-lg md:p-12 p-8">
           <div className="flex justify-between mb-4">
             <Link href="/">
               <div className="flex items-center space-x-1">

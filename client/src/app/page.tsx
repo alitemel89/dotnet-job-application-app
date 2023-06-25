@@ -1,6 +1,7 @@
 import Image from "next/image";
 import JobCard from "./components/JobCard";
 import Navbar from "./components/Navbar";
+import { CodeBracketSquareIcon, MapPinIcon } from "@heroicons/react/24/solid";
 
 type JobProps = {
   jobId: string;
@@ -28,13 +29,26 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <div className="relative h-[60vh] w-full">
-        <Image
-          src="/images/hero.jpg"
-          alt="hero-image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
+      <div className="flex justify-center">
+        <div className="relative h-[60vh] w-full">
+          <Image
+            src="/images/hero.jpg"
+            alt="hero-image"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        <div className="text-white absolute top-1/4 text-center">
+          <h1 className="md:text-5xl font-bold my-4 text-3xl">
+            Find Latest Tech Jobs!
+          </h1>
+          <div className="flex items-center justify-center">
+            <CodeBracketSquareIcon className="w-6 h-6 ml-4" />
+            <p className="text-white p-1 font-light text-center">
+              EU TECH JOBS
+            </p>
+          </div>
+        </div>
       </div>
       <main className="flex flex-col space-y-4 items-center justify-between bg-slate-100 p-8">
         {jobs.map((job: JobProps) => (

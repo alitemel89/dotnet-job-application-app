@@ -1,21 +1,25 @@
 import React from "react";
 import UploadLogoComponent from "../../components/UploadLogo";
+import Navbar from "@/app/components/Navbar";
 
 interface Props {
   params: { userId: string };
 }
 
 interface Application {
-  id: string,
-  name: string,
-  email: string
+  id: string;
+  name: string;
+  email: string;
+  resumeFilePath: string;
+  appliedDate: string;
+  jobId: string;
 }
 
+export const revalidate = 10;
 
 async function CompanyProfile({ params: { userId } }: Props) {
   async function getApplications() {
-
-    const res = await fetch(`http://localhost:5000/api/applications/${userId}`); 
+    const res = await fetch(`http://localhost:5000/api/applications/${userId}`);
 
     if (!res.ok) {
       throw new Error("Failed to fetch applications");
@@ -26,13 +30,67 @@ async function CompanyProfile({ params: { userId } }: Props) {
   const applications = await getApplications();
   return (
     <>
-      <UploadLogoComponent />
-      {applications.map((application: Application) => (
-        <div key={application.id}>
-          <p>Name: {application.name}</p>
-          <p>Email: {application.email}</p>
-        </div>
-      ))}
+      <Navbar />
+      <div className="flex flex-col bg-gray-100 h-screen">
+        <UploadLogoComponent />
+        {applications.length ? (
+          <div className="flex justify-center p-8">
+            <div className="overflow-x-auto">
+              <h1 className="text-2xl font-bold my-4 text-center">
+                Applications
+              </h1>
+              <table className="border border-gray-200 bg-white shadow-md rounded-lg">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 border-b border-gray-200 font-semibold text-left">
+                      Name
+                    </th>
+                    <th className="py-2 px-4 border-b border-gray-200 font-semibold text-left">
+                      Email
+                    </th>
+                    <th className="py-2 px-4 border-b border-gray-200 font-semibold text-left">
+                      Resume File Path
+                    </th>
+                    <th className="py-2 px-4 border-b border-gray-200 font-semibold text-left">
+                      Job ID
+                    </th>
+                    <th className="py-2 px-4 border-b border-gray-200 font-semibold text-left">
+                      Applied Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {applications.map((application: Application) => (
+                    <tr key={application.id}>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {application.name}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {application.email}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {application.resumeFilePath}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {application.jobId}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {application.appliedDate}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold my-4 text-center">
+              You have no Applications
+            </h1>
+          </>
+        )}
+      </div>
     </>
   );
 }
