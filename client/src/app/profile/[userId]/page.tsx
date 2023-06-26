@@ -28,6 +28,9 @@ async function CompanyProfile({ params: { userId } }: Props) {
   }
 
   const applications = await getApplications();
+
+
+
   return (
     <>
       <Navbar />
@@ -69,7 +72,16 @@ async function CompanyProfile({ params: { userId } }: Props) {
                         {application.email}
                       </td>
                       <td className="py-2 px-4 border-b border-gray-200">
-                        {application.resumeFilePath}
+                        <a
+                          href={`http://localhost:5000/api/applications/download?FileName=${encodeURIComponent(application.resumeFilePath)}`}
+                          download={application.resumeFilePath.split("/").pop() || ""}
+                          className="text-indigo-500 hover:underline font-bold"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {application.resumeFilePath}
+                        </a>
+
                       </td>
                       <td className="py-2 px-4 border-b border-gray-200">
                         {application.jobId}

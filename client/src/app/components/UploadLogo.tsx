@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Toaster, toast } from "react-hot-toast";
 import { storage } from "../../../firebase";
 import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 function UploadLogoComponent() {
   const [logoUpload, setLogoUpload] = useState<File | null>(null);
@@ -45,6 +46,10 @@ function UploadLogoComponent() {
           <div>
             <h2 className="text-lg font-bold my-4">Uploaded Logo:</h2>
             <img src={logoUrl} alt="uploaded logo" />
+            <Link className="btn mt-4" href="/">
+              Done
+            </Link>
+
           </div>
         )}
       </div>

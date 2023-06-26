@@ -6,19 +6,17 @@ import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../../firebase";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
-interface User {
-  id: string;
-  email: string;
-  passwordHash: string;
-  companyName: string;
-}
 
 interface Job {
   jobId: string;
   position: string;
   description: string;
-  user: User;
   location: string;
+  user: {
+    id: string;
+    email: string;
+    companyName: string;
+  };
 }
 
 interface Props {

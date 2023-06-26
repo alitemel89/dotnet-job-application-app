@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ProfileButton } from "./ProfileButton";
 
 interface User {
   id: string,
