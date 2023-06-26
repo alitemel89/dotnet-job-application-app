@@ -1,18 +1,11 @@
 import React from "react";
 import UploadLogoComponent from "../../components/UploadLogo";
 import Navbar from "@/app/components/Navbar";
+import { Application } from "@/app/types";
+import Link from "next/link";
 
 interface Props {
   params: { userId: string };
-}
-
-interface Application {
-  id: string;
-  name: string;
-  email: string;
-  resumeFilePath: string;
-  appliedDate: string;
-  jobId: string;
 }
 
 export const revalidate = 10;
@@ -72,15 +65,15 @@ async function CompanyProfile({ params: { userId } }: Props) {
                         {application.email}
                       </td>
                       <td className="py-2 px-4 border-b border-gray-200">
-                        <a
+                        <Link
                           href={`http://localhost:5000/api/applications/download?FileName=${encodeURIComponent(application.resumeFilePath)}`}
-                          download={application.resumeFilePath.split("/").pop() || ""}
+                          download={application.resumeFilePath?.split("/").pop() || ""}
                           className="text-indigo-500 hover:underline font-bold"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           {application.resumeFilePath}
-                        </a>
+                        </Link>
 
                       </td>
                       <td className="py-2 px-4 border-b border-gray-200">

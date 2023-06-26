@@ -91,7 +91,7 @@ const Navbar = () => {
             {/* Add additional buttons or icons here */}
           </div>
           {userEmail ? (
-            <div>
+            <div className="items-center">
               <Link
                 href="/post"
                 className="hidden md:block btn float-left mx-4"
@@ -119,6 +119,7 @@ const Navbar = () => {
               >
                 Sign in
               </Link>
+              
             </div>
           )}
           <div className="-mr-2 flex md:hidden">

@@ -5,19 +5,8 @@ import Image from "next/image";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../../firebase";
 import { MapPinIcon } from "@heroicons/react/24/solid";
+import { Job } from "../types";
 
-
-interface Job {
-  jobId: string;
-  position: string;
-  description: string;
-  location: string;
-  user: {
-    id: string;
-    email: string;
-    companyName: string;
-  };
-}
 
 interface Props {
   companyName: string;

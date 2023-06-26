@@ -3,14 +3,22 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "../components/Navbar";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 function PostJob() {
+  const router = useRouter();
   const [position, setPosition] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
 
-  const handlePostJob = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handlePostJob = handleSubmit(async (data) => {
     const token = localStorage.getItem("jwtToken");
     console.log(token);
     try {
@@ -20,12 +28,13 @@ function PostJob() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ position, description, location }),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         // Job posted successfully
         toast.success("Job posted successfully");
+        router.push("/");
         // Add any additional logic or redirect to another page
       } else {
         // Handle the error case
@@ -34,7 +43,7 @@ function PostJob() {
     } catch (error: any) {
       toast.error(error);
     }
-  };
+  });
 
   return (
     <>
@@ -51,10 +60,14 @@ function PostJob() {
                 type="text"
                 id="position"
                 value={position}
-                onChange={(e) => setPosition(e.target.value)}
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none 
                 focus:ring-2 focus:ring-blue-500 mb-2"
+                {...register("position", { required: true })}
+                onChange={(e) => setPosition(e.target.value)}
               />
+              {errors.position && (
+                <span className="text-red-500">Position is required</span>
+              )}
               <label htmlFor="position" className="block font-medium mb-2">
                 Location:
               </label>
@@ -62,10 +75,14 @@ function PostJob() {
                 type="text"
                 id="position"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                {...register("location", { required: true })}
                 className="w-full border border-gray-300 rounded-md py-2 px-3 
                 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) => setLocation(e.target.value)}
               />
+              {errors.location && (
+                <span className="text-red-500">Location is required</span>
+              )}
             </div>
             <div className="mb-4">
               <label htmlFor="description" className="block font-medium mb-2">
@@ -74,10 +91,14 @@ function PostJob() {
               <textarea
                 id="description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                {...register("description", { required: true })}
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={8}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
+              {errors.description && (
+                <span className="text-red-500">Description is required</span>
+              )}
             </div>
             <button type="submit" className="btn">
               Post Job

@@ -38,14 +38,14 @@ export default async function Home() {
             style={{ objectFit: "cover" }}
           />
         </div>
-        <div className="text-white absolute top-1/4 text-center">
+        <div className="text-white absolute md:top-1/4 top-2/4 text-center">
           <h1 className="md:text-5xl font-bold my-4 text-3xl">
             Find Latest Tech Jobs!
           </h1>
           <div className="flex items-center justify-center">
             <CodeBracketSquareIcon className="w-6 h-6 ml-4" />
             <p className="text-white p-1 font-light text-center">
-              EU TECH JOBS
+              REMOTE TECH JOBS
             </p>
           </div>
         </div>
