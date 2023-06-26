@@ -1,19 +1,22 @@
 "use client";
 
 import {
+  ArrowDownIcon,
+  ArrowLeftOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
   Bars3Icon,
+  ChevronDownIcon,
   CommandLineIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ProfileButton } from "./ProfileButton";
 
 interface User {
-  id: string,
-  email: string,
-  passwordHash: string,
-  companyName: string
+  id: string;
+  email: string;
+  passwordHash: string;
+  companyName: string;
 }
 
 const Navbar = () => {
@@ -34,7 +37,9 @@ const Navbar = () => {
         const response = await fetch("http://localhost:5000/api/users");
         if (response.ok) {
           const users: User[] = await response.json();
-          const matchedUser: User | undefined = users.find(user => user.email === userEmail);
+          const matchedUser: User | undefined = users.find(
+            (user) => user.email === userEmail
+          );
           setUserId(matchedUser?.id!);
           console.log(users);
         } else {
@@ -52,7 +57,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(userId)
+  console.log(userId);
   return (
     <nav className="bg-gray-800 static">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,7 +124,6 @@ const Navbar = () => {
               >
                 Sign in
               </Link>
-              
             </div>
           )}
           <div className="-mr-2 flex md:hidden">
@@ -158,7 +162,10 @@ const Navbar = () => {
                 <Link href="/post" className="btn">
                   Post a Job
                 </Link>
-                <Link href={`/profile/${userId}`} className="btn-secondary mx-4">
+                <Link
+                  href={`/profile/${userId}`}
+                  className="btn-secondary mx-4"
+                >
                   {userEmail}
                 </Link>
               </div>

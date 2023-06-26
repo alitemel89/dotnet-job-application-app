@@ -6,28 +6,27 @@ import {
 import Link from "next/link";
 import React from "react";
 import HeroSection from "@/app/components/HeroSection";
+import ShareButton from "@/app/components/ShareButton";
 
 interface Props {
   params: { companyName: string; jobId: string };
 }
 
-export const revalidate = 60 // revalidate this page every 60 seconds
+export const revalidate = 60; // revalidate this page every 60 seconds
 
 async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
   // fetch data from server with parameter jobId and companyName
   async function getJob() {
-    const res = await fetch(`http://localhost:5000/api/jobs/${jobId}`) // The result is cached
+    const res = await fetch(`http://localhost:5000/api/jobs/${jobId}`); // The result is cached
     return res.json();
   }
 
   const job = await getJob();
 
-
   return (
     <div className="bg-slate-100 min-h-screen">
       {/* Hero section */}
       <HeroSection job={job} companyName={companyName} />
-      
 
       {/* Job details */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -40,13 +39,7 @@ async function JobDetailsPage({ params: { companyName, jobId } }: Props) {
               </div>
             </Link>
             <div className="flex space-x-4">
-              <Link
-                href="/share"
-                className="btn-secondary text-emerald-400 flex items-center space-x-2"
-              >
-                <p>Share</p>
-                <ShareIcon className="w-4 h-4 text-emerald-400" />
-              </Link>
+              <ShareButton />
               <Link
                 href={`/apply/${jobId}`}
                 className="btn flex items-center space-x-2"

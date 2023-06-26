@@ -32,7 +32,7 @@ async function CompanyProfile({ params: { userId } }: Props) {
         {applications.length ? (
           <div className="flex justify-center p-8">
             <div className="overflow-x-auto">
-              <h1 className="text-2xl font-bold my-4 text-center">
+              <h1 className="text-2xl font-bold my-4 text-center text-blue-900">
                 Applications
               </h1>
               <table className="border border-gray-200 bg-white shadow-md rounded-lg">

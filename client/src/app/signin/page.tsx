@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import bcrypt from "bcryptjs";
 import { Toaster, toast } from "react-hot-toast";
+import Link from "next/link";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -49,7 +50,7 @@ function Signin() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-emerald-400 to-indigo-800">
       <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
-        <h2 className="text-2xl font-bold text-center mb-8">Sign in</h2>
+        <h2 className="text-2xl font-bold text-center mb-8 text-blue-900">Sign in</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4"></div>
           <div className="mb-4">
@@ -90,11 +91,12 @@ function Signin() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+              className="btn"
             >
               Sign in
             </button>
           </div>
+          <Link href="/register" className="text-gray-400 underline text-sm mt-4 flex justify-center">Create an account</Link>
           <Toaster position="top-right" />
         </form>
       </div>

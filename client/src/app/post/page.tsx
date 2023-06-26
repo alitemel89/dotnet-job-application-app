@@ -50,7 +50,7 @@ function PostJob() {
       <Navbar />
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-emerald-200 to-indigo-400">
         <div className="bg-white p-8 rounded shadow-md md:w-3/5 w-full">
-          <h1 className="text-2xl font-bold mb-4">Post a Job</h1>
+          <h1 className="text-2xl font-bold mb-4 text-blue-900">Post a Job</h1>
           <form onSubmit={handlePostJob}>
             <div className="mb-4">
               <label htmlFor="position" className="block font-medium mb-2">
